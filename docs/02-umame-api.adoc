@@ -1,0 +1,2 @@
+== UMAME Generic code
+

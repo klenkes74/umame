@@ -1,0 +1,13 @@
+[appendix]
+== Glossary
+[glossary]
+
+HTTP:: Hyper Text Transfer Protocol
+IETF:: Internet Engineering Task Force, the standardization body of the internet.
+Kubernetes:: A container orchestration software, originally developed by Google.
+OCP:: OpenShift Container Platform. The enterprise <<kubernetes>> provided by Red Hat.
+OIDC:: Short form for <<OpenID Connect>>.
+OpenID Connect:: An authentication and authorization protocol defined for use with <<HTTP>>.
+PRT::
+RFC:: Request for Comment, the standardization documents of the IETF
+UMA:: User Managed Authorization

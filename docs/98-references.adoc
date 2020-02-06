@@ -1,0 +1,19 @@
+[appendix]
+== References
+[bibliography]
+
+- [[[RFC-6749]]], D. Hardt Ed. (Microsoft),
+  The OAuth 2.0 Authorization Framework,
+  October 2012,
+  Internet Engineering Task Force (IETF),
+  https://tools.ietf.org/html/rfc6749
+- [[[RFC-6750]]], M. Jones (Microsoft) and D. Hardt (Independent),
+  The OAuth 2.0 Authorization Framework: Bearer Token Usage,
+  October 2012,
+  Internet Engineering Task Force (IETF),
+  https://tools.ietf.org/html/rfc6750
+- [[[RFC-8252]]], W. Denniss (Google) and J. Bradley (Ping Identity),
+  OAuth 2.0 for Native Apps,
+  October 2017,
+  Internet Engineering Task Force (IETF),
+  https://tools.ietf.org/html/rfc8252
