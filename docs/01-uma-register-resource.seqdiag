@@ -1,0 +1,23 @@
+seqdiag {
+activation = none;
+autonumber = True;
+
+ResourceOwner  => ResourceServer                                                [label = "PUT /resource (w/o authz)", color="lightblue", return = "Return 302 (Redirect) to AuthorizationServer"];
+ResourceOwner                     => AuthorizationServer                        [label = "Login and authorized", return = "Return 302 (Redirect) to ResourceServer"];
+ResourceOwner  -> ResourceServer                                                [label = "PUT /resource (w/ authz)", color="lightblue"];
+                  ResourceServer  => AuthorizationServer                        [label = "submit authz code for PAT", return = "issue PAT (OAuth scope 'uma_protection')"];
+
+=== AuthorizationServer is not working ===
+ResourceOwner <-  ResourceServer                                                [label = "Return 500", color="red", note="The flow ends here."];
+
+=== AuthorizationServer is working ===
+                  ResourceServer  -> AuthorizationServer                        [label = "POST /resource (w/ scopes)"];
+
+=== Resource has been created ===
+                  ResourceServer <-  AuthorizationServer                        [label = "Return 201 Created (w/ location RSID)"];
+ResourceOwner <-  ResourceServer                                                [label = "Return 201", color="green"];
+
+=== Something went wrong ===
+                  ResourceServer <-  AuthorizationServer                        [label = "Return failure", color="red"];
+ResourceOwner <-  ResourceServer                                                [label = "Return 500", color="red"];
+}

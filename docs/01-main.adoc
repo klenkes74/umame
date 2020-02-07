@@ -17,14 +17,21 @@ The following (((UMA flow)))flows are implemented in the library.
 ==== Requesting a resource (w/ token)
 .(((UMA flow, Requesting Resource, w/ token)))Requesting a resource w/ token.
 [#uma-flow-resource-with-token]
-image::generated/01-uma-flow-access-with-token.seqdiag.png[width="200%", role="right"]
+image::generated/01-uma-flow-access-with-token.seqdiag.png[width="200%"]
 The flow is easy, as soon as the client owns a token to request access. The token is checked at the introspection
 endpoint of the Authorization Server.
 
 ==== Requesting a resource (w/o token)
 .(((UMA flow, Requesting Resource, w/o token)))Requesting a resource w/o token.
 [#uma-flow-resource-without-token]
-image::generated/01-uma-flow-access.seqdiag.png[width="200%", role="right"]
+image::generated/01-uma-flow-access.seqdiag.png[width="200%"]
 When no token is transmitted during the request, the flow is quite complicted to retrieve the
 token. As soon as the token is presented, the flow in <<Requesting a resource (w/ token)>> is taking over.
+
+==== Registering a resource (w/o authz code)
+.(((UMA flow, Register Resource)))Registering a new resource w/o authz code.
+[#uma-flow-register-resource]
+image::generated/01-uma-register-resource.seqdiag.png[with="200%"]
+The resource needs to be registered at the Authorization Server to be accessable. The permission management will be
+handled out-of-band from UMAMEs point of view.
 

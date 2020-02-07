@@ -7,7 +7,7 @@ ASCIIDOCTOR_COMMAND=podman run -it -v $(PROJECT_DIR):/documents:Z -v $(OUTPUT_DI
 ASCIIDOCTOR_PDF_COMMAND=podman run -it -v $(PROJECT_DIR):/documents:Z -v $(OUTPUT_DIR):/output:Z -w /documents/ quay.io/jaeichle/asciidoctor-redhat-fonts asciidoctor-pdf
 ASCIIDOCTOR_PARAMS=-r asciidoctor-diagram
 
-seqdiag: 01-uma-flow-access.seqdiag.png 01-uma-flow-access-with-token.seqdiag.png
+seqdiag: 01-uma-flow-access.seqdiag.png 01-uma-flow-access-with-token.seqdiag.png 01-uma-register-resource.seqdiag.png
 
 all: maven $(BASE_NAME).pdf
 
