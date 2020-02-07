@@ -1,4 +1,30 @@
 == Overview and architecture
 
-The main ((uma flow))footnote:uma-flow[The flow is found on https://www.websequencediagrams.com/?lz=dGl0bGUgVU1BIHBoYXNlIDE6IHByb3RlY3RpbmcgYSByZXNvdXJjZSAocmV2IDA3YikKCnBhcnRpY2lwYW50ICIAGAlvd25lclxuKFJPKSIgYXMgUk8AEhdzZXJ2ACQGUwAjB1MARQ5hdXRob3JpemF0aW9uACUKQQAoB0FTCgpub3RlIG92ZXIgUk8sIFJTLCBBUwpTZWMALQVyZWZlcmVuY2VzIGFyZSBmcm9tIGh0dHA6Ly9kb2NzLmthbnRhcmFpbml0aWF0aXZlLm9yZy91bWEvZHJhZnQtdW1hLWNvcmUuaHRtbCBkYXRlZCA2IEphbiAyMDEzXG4KVG9rZW4gdGVybWlub2xvZ3k6CiogUEFUID0AgjQJb24gQVBJIHRva2VuXG4KQmluZGluZyBvYmxpZwCBUwVzADQMLCBhcyBzaG93biBpbiBub3RlcwCBWAZlbnRpdGllcyByZXByZXNlbgCDEgUAPwdlZCAAgwYFZXNcbihzZWUAgTQxdHJ1c3QAgWEFKToKKiBTdWJqZWN0ID0gSW5kaXZpZHVhbCBvciBOb24tUGVyc29uIEVudGl0eQoqIEEAgx0HaW5nIFBhcnR5ID0ANwlhAIQ2B3MAhDQKAIQYBQoqIEFTIE9wZXJhdG9yACYLbwAOBQCEbAUAg2gTIGVuZHBvaW50CiogUgAhHwCEVg8AMQplbmQAglMFCgpSUy0tPlJTOiBMZWFybiBBUyBsb2MAhGUGb3V0IG9mIGJhbmQgKFNlYyAyKQpSUy0-QVM6IExvb2sgdXAgQVMgY29uZmlnIGRhdGEAIQYxLjUpCkFTAFEGAAgZAHQFQVM6IER5bmFtaWMgY2xpZW50IHJlZ2lzdHIAhWgGaWYgbmVjZXNzYXJ5IFxuAIEABiwgAIUTBmlldGYtb2F1dGgtZHluLXJlZykAhXsPQVMsIFJTOiBHZXQAhQwFdXNpbmcgZW1iZWRkZWQgT0F1dGggZmxvdyAoAIZYDmNvZGUgZ3JhbnQAGQYAhQgFKQCBVwgzLjEAggQGUk86IFJlZGlyZWN0IHRvIEFTLi4uClJPAIIeBi4uLnRvIGxvZyBpbiBhbmQgY29uc2VuACUFUEFUIGlzc3VhbmNlAIIjCUlzc3VlIFBBVACHRQ1TOgCDXAwtAIRaETpcbkRlbGVnYXRlLVAAhmcJACYcAIRsCjpcblIAgmsFZXItQWNjdXJhdGVseS1hbmQtVGltZWx5AIhQC0EAg0gGAGwdRm9sbG93LVBvbGljaWVzADMhUk86AIYqEgCBEg9JbnRyb2R1Y2UtUgCKdwctUwCKLwUAJyEAhhQLADsNAIcmCACKTQUARQgAhCYVCgCCFggAhj8MdHMAhggHAIUBCGhhcmRqb25vAIUGBwCMHQgAhQwGAIZeDQCGNwUAPhYsIACJSAtQQVQAhjkJQ29uZmlybQCGDA0&s=earth[Web Sequence Diagrams].] is handled by ...
+=== Scope of UMAME
+UMAME tries to solve the problems for Resource Servers. It is directed to JAX-RS resources that should be protected on
+resource level with user managed access. There will be support for (un)registering resources at the Authorization Server,
+but the management of the permissions ins out of scope. You will need some software to allow that management. The used
+reference implementation ((Keycloak))footnote:keycloak[https://www.keycloak.org[Keycloak] is an open source project
+mainly developed by https://www.redhat.com[Red Hat]. Red Hat also offers a supported product Red Hat SSO based on
+Keycloak. For full disclosure: I work for Red Hat.]
+
+For UMAME, the client and Resource Server are one identity. The sequence diagrams seperated between them to show the
+(((UMA flow, Requesting Resource)))UMA request resource flow in a more recognizable manner.
+
+=== Sequence flows of this software
+The following (((UMA flow)))flows are implemented in the library.
+
+==== Requesting a resource (w/ token)
+.(((UMA flow, Requesting Resource, w/ token)))Requesting a resource w/ token.
+[#uma-flow-resource-with-token]
+image::generated/01-uma-flow-access-with-token.seqdiag.png[width="200%", role="right"]
+The flow is easy, as soon as the client owns a token to request access. The token is checked at the introspection
+endpoint of the Authorization Server.
+
+==== Requesting a resource (w/o token)
+.(((UMA flow, Requesting Resource, w/o token)))Requesting a resource w/o token.
+[#uma-flow-resource-without-token]
+image::generated/01-uma-flow-access.seqdiag.png[width="200%", role="right"]
+When no token is transmitted during the request, the flow is quite complicted to retrieve the
+token. As soon as the token is presented, the flow in <<Requesting a resource (w/ token)>> is taking over.
 

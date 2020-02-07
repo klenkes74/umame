@@ -1,0 +1,10 @@
+[appendix]
+== Legalese
+
+The UMAME source code is licensed under the well known GNU Lesser Public License 3 <<LGPL3>>. Some libraries we use have
+other licenses. The documentation is licensed as Creative Commons Attribution-ShareAlike 4.0 International <<CC-BY-SA>>.
+Within Germany the official German translations as given in chapter <<Referneces>> are binding. Outside of Germany the
+English text of the licenses are the binding ones.
+
+The (((UMA flow)))UMA flow is licensed according to <<UMA-IPR>>. There are three options, if the reciprocal patent
+licensing is chosen by <<UMA-WG>> I hereby grant everything according to the rules outlined in <<UMA-IPR>>.

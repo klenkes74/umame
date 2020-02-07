@@ -1,19 +1,63 @@
 [appendix]
 == References
 [bibliography]
-
-- [[[RFC-6749]]], D. Hardt Ed. (Microsoft),
-  The OAuth 2.0 Authorization Framework,
+- [[[UMA-WG]]],
+  *Kantara Working Group - User Managed Access*,
+  Kantara Initiative,
+  https://kantarainitiative.org/confluence/display/uma/Home
+- [[[UMA-IPR]]],
+  *Intellectual Property Rights Policies*,
+  2009-12-17,
+  Kantara Initiative,
+  https://kantarainitiative.org/confluence/pages/viewpage.action?pageId=41025689&preview=/2293776/39125094/Kantara%20Initiative%20IPR%20Policies
+- [[[UMA2-FED]]],
+  *Federated Authorization for User-Managed Access (UMA) 2.0*,
+  _Eve Maler, Ed. (ForgeRock), Maciej Machulak (HSBC), Justin Richer (Bespoke Engineering)_,
+  2018-01-07,
+  Kantara Initiative,
+  https://docs.kantarainitiative.org/uma/wg/rec-oauth-uma-federated-authz-2.0.html
+- [[[UMA2-GRANT]]]
+  *User-Managed Access (UMA) 2.0 Grant for OAuth 2.0 Authorization*,
+  _Eve Maler, Ed. (ForgeRock), Maciej Machulak (HSBC), Justin Richer (Bespoke Engineering)_,
+  2018-01-07,
+  Kantara Initiative,
+  https://docs.kantarainitiative.org/uma/wg/rec-oauth-uma-grant-2.0.html
+- [[[RFC-6749]]],
+  *The OAuth 2.0 Authorization Framework*,
+  _D. Hardt Ed. (Microsoft)_,
   October 2012,
   Internet Engineering Task Force (IETF),
   https://tools.ietf.org/html/rfc6749
-- [[[RFC-6750]]], M. Jones (Microsoft) and D. Hardt (Independent),
-  The OAuth 2.0 Authorization Framework: Bearer Token Usage,
+- [[[RFC-6750]]],
+  *The OAuth 2.0 Authorization Framework: Bearer Token Usage*,
+  _M. Jones (Microsoft) and D. Hardt (Independent)_,
   October 2012,
   Internet Engineering Task Force (IETF),
   https://tools.ietf.org/html/rfc6750
-- [[[RFC-8252]]], W. Denniss (Google) and J. Bradley (Ping Identity),
-  OAuth 2.0 for Native Apps,
+- [[[RFC-7231]]],
+  *Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content*,
+  _R. Fielding, Ed. (Adobe) and J. Reschke, Ed. (greenbytes)_,
+  June 2014,
+  Internet Engineering Task Force (IETF),
+  https://tools.ietf.org/html/rfc7231
+- [[[RFC-7235]]],
+  *Hypertext Transfer Protocol (HTTP/1.1): Authentication*,
+  _R. Fielding, Ed. (Adobe) and J. Reschke, Ed. (greenbytes)_,
+  June 2014,
+  Internet Engineering Task Force (IETF),
+  https://tools.ietf.org/html/rfc7235
+- [[[RFC-8252]]],
+  *OAuth 2.0 for Native Apps*,
+  _W. Denniss (Google) and J. Bradley (Ping Identity)_,
   October 2017,
   Internet Engineering Task Force (IETF),
   https://tools.ietf.org/html/rfc8252
+- [[[LGPL3]]],
+  *GNU LESSER GENERAL PUBLIC LICENSE, Version 3*,
+  2007-06-29,
+  Free Software Foundation,
+  https://www.gnu.org/licenses/lgpl-3.0.de.html
+- [[[CC-BY-SA]]],
+  *Creative Commons Attribution-ShareAlike 4.0 International Public License*,
+  Creative Commons,
+  https://creativecommons.org/licenses/by-sa/4.0/legalcode.de

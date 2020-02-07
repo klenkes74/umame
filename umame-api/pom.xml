@@ -13,18 +13,7 @@
     </parent>
 
     <artifactId>umame-api</artifactId>
+    <packaging>jar</packaging>
 
     <name>UMAME :: Generic API</name>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-        </dependency>
-    </dependencies>
 </project>

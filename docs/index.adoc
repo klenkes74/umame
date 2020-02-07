@@ -17,8 +17,10 @@ include::02-umame-api.adoc[]
 
 include::03-umame-keycloak.adoc[]
 
+include::96-legalese.adoc[]
+
 include::97-glossary.adoc[]
 
 include::98-references.adoc[]
 
-include::99-index.adoc[]
+ifdef::backend-pdf[include::99-index.adoc[leveloffset=+1]]

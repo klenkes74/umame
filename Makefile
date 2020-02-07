@@ -1,30 +1,38 @@
 BASE_NAME=index
 
-PROJECT_DIR=$(shell pwd)/docs
-OUTPUT_DIR=$(shell pwd)/target/docs
+PROJECT_DIR=$(CURDIR)/docs
+OUTPUT_DIR=$(CURDIR)/target/docs
+SEQDIAG_GENERATOR=podman run -it -v $(PROJECT_DIR):/documents:Z -v $(OUTPUT_DIR):/output:Z -w /documents/ quay.io/jaeichle/asciidoctor-redhat-fonts seqdiag
 ASCIIDOCTOR_COMMAND=podman run -it -v $(PROJECT_DIR):/documents:Z -v $(OUTPUT_DIR):/output:Z -w /documents/ quay.io/jaeichle/asciidoctor-redhat-fonts asciidoctor
 ASCIIDOCTOR_PDF_COMMAND=podman run -it -v $(PROJECT_DIR):/documents:Z -v $(OUTPUT_DIR):/output:Z -w /documents/ quay.io/jaeichle/asciidoctor-redhat-fonts asciidoctor-pdf
 ASCIIDOCTOR_PARAMS=-r asciidoctor-diagram
 
-all: maven $(BASE_NAME).html $(BASE_NAME).pdf $(BASE_NAME).xml
+seqdiag: 01-uma-flow-access.seqdiag.png 01-uma-flow-access-with-token.seqdiag.png
+
+all: maven $(BASE_NAME).pdf
 
 clean:
 	rm -rf $(OUTPUT_DIR)
+	rm -rf $(PROJECT_DIR)/generated
+	mvn clean
 
 prepare: clean
-	mkdir -p $(OUTPUT_DIR)
+	mkdir -p $(PROJECT_DIR)/generated
+	mkdir -p $(OUTPUT_DIR)/generated
+
+%.seqdiag.png:
+	$(SEQDIAG_GENERATOR) $*.seqdiag -o generated/$*.seqdiag.png
 
 maven:
-	mvn clean install
-
-$(BASE_NAME).html: prepare
+	mvn install
 
 # https://github.com/asciidoctor/asciidoctor-pdf
-$(BASE_NAME).pdf: prepare
-	$(ASCIIDOCTOR_PDF_COMMAND) $(ASCIIDOCTOR_PARAMS) $(BASE_NAME).adoc -o /output/$(BASE_NAME).pdf
+%.pdf: prepare seqdiag
+	$(ASCIIDOCTOR_PDF_COMMAND) $(ASCIIDOCTOR_PARAMS) $*.adoc -o /output/$*.pdf
 
-$(BASE_NAME).xml: prepare
-	$(ASCIIDOCTOR_COMMAND) $(ASCIIDOCTOR_PARAMS) -b docbook5 $(BASE_NAME).adoc -o /output/$(BASE_NAME).xml
+%.xml: prepare seqdiag
+	$(ASCIIDOCTOR_COMMAND) $(ASCIIDOCTOR_PARAMS) -b docbook5 $*.adoc -o /output/$*.xml
 
-$(BASE_NAME).html: prepare
-	$(ASCIIDOCTOR_COMMAND) $(ASCIIDOCTOR_PARAMS) -b html $(BASE_NAME).adoc -o /output/$(BASE_NAME).html
+%.html: prepare seqdiag
+	cp $(PROJECT_DIR)/generated/*.png $(OUTPUT_DIR)/generated
+	$(ASCIIDOCTOR_COMMAND) $(ASCIIDOCTOR_PARAMS) -b html $*.adoc -o /output/$*.html

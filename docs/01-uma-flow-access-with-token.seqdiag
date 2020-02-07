@@ -1,0 +1,19 @@
+seqdiag {
+activation = none;
+autonumber = True;
+
+RequestingParty  -> Client                                                      [label = "GET /resource (w/o token)", color="lightblue"];
+                    Client  -> ResourceServer                                   [label = "GET /resource (w/ token)", color="blue"];
+                               ResourceServer  -> AuthorizationServer           [label = "check token at introspection endpoint"];
+                               ResourceServer <-- AuthorizationServer           [label = "token status and permissions"];
+                               ResourceServer
+                            -> ResourceServer                                   [label = "check permission"];
+
+                    === Permissions are sufficient ===
+                    Client <-- ResourceServer                                   [label = "return /resource", color="green"];
+RequestingParty <-  Client                                                      [label = "return /resource", color="green"];
+
+                    === Permissions are not sufficient ===
+                    Client <-- ResourceServer                                   [label = "Return 403 (Access forbidden)", color="red"]
+RequestingParty <-  Client                                                      [label = "Return 403 (Access forbidden)", color="red"]
+}

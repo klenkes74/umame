@@ -1,0 +1,30 @@
+seqdiag {
+activation = none;
+autonumber = True;
+
+RequestingParty  -> Client                                                      [label = "GET /resource (w/o token)", color="lightblue"];
+                    Client  -> ResourceServer                                   [label = "GET /resource (w/o token)", color="lightblue"];
+
+                               ResourceServer
+                            -> ResourceServer                                   [label = "check permission"];
+                               ResourceServer  => AuthorizationServer           [label = "request permission at permission endpoint", return = "return permission ticket"];
+                    === AuthorizationServer in unreachable or returns an error ===
+                    Client <-- ResourceServer                                   [label = "Return 403 (Access forbidden)", color="red", note = "The flow ends now."];
+RequestingParty <-  Client                                                      [label = "Return 403 (Access forbidden)", color="red", note = "The flow ends now."];
+
+                    === AuthorizationServer is working ===
+                    Client <-  ResourceServer                                   [label = "Return 401 (Unauthorized) with as_uri and permission ticket", color="red"];
+                    Client                     => AuthorizationServer           [label = "request config at discovery endpoint", return = "return AS configuration"];
+                    Client                     => AuthorizationServer           [label = "request token with permission ticket and scopes at token endpoint", return = "return Access Token (RTP)"];
+                    Client  -> ResourceServer                                   [label = "GET /resource (w/ token)", color="blue"];
+                               ResourceServer
+                            -> ResourceServer                                   [label = "check permission"];
+
+                    === Permissions are sufficient ===
+                    Client <-- ResourceServer                                   [label = "return /resource", color="green"];
+RequestingParty <-  Client                                                      [label = "return /resource", color="green"];
+
+                    === Permissions are not sufficient ===
+                    Client <-- ResourceServer                                   [label = "Return 403 (Access forbidden)", color="red"]
+RequestingParty <-  Client                                                      [label = "Return 403 (Access forbidden)", color="red"]
+}
