@@ -1,6 +1,6 @@
 = UMAME - User managed authorization made easy
 Roland T. Lichti <rlichti@kaiserpfalz-edv.de>
-1.0.0, 2020-02-05
+0.1.0, 2020-02-08
 :doctype: book
 :pdf-page-size: A4
 :pdf-page-layout: portrait
@@ -16,6 +16,8 @@ include::01-main.adoc[]
 include::02-umame-api.adoc[]
 
 include::03-umame-keycloak.adoc[]
+
+include::95-history.adoc[]
 
 include::96-legalese.adoc[]
 
