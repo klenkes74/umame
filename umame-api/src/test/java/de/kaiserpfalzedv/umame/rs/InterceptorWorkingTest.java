@@ -18,8 +18,6 @@
 package de.kaiserpfalzedv.umame.rs;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.interceptor.InvocationContext;
 import java.lang.reflect.Constructor;
@@ -32,8 +30,6 @@ import java.util.Map;
  * @since 1.0.0 2020-02-08
  */
 public class InterceptorWorkingTest {
-    private static final Logger LOG = LoggerFactory.getLogger(InterceptorWorkingTest.class);
-
     @Test
     public void shouldRunWithoutException() throws Exception {
         UserManagedAuthorizationInterceptor service = new UserManagedAuthorizationInterceptor();
@@ -75,7 +71,7 @@ public class InterceptorWorkingTest {
             }
 
             @Override
-            public Object proceed() throws Exception {
+            public Object proceed() {
                 return null;
             }
         });

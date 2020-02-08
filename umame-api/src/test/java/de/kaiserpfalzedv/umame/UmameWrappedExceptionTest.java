@@ -28,6 +28,8 @@ import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 /**
  * @author rlichti
  * @version 1.0.0 2020-02-08
@@ -123,8 +125,14 @@ public class UmameWrappedExceptionTest {
     }
 
     @Test
-    public void shouldCloneCorrectly() throws CloneNotSupportedException {
-        assert service.unwrap().equals(((UmameWrappedException) service.clone()).unwrap());
+    public void shouldThrowCloneNotSupportedExceptionWhenCloned() {
+        try {
+            service.clone();
+
+            fail("There should have been a CloneNotSupportedException!");
+        } catch (CloneNotSupportedException e) {
+            // every thing is fine!
+        }
     }
 
     @Test

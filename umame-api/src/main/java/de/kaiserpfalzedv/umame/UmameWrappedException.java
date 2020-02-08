@@ -85,6 +85,7 @@ public class UmameWrappedException extends BaseUmameRuntimeException {
         return wrapped.hashCode();
     }
 
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     @Override
     public boolean equals(Object obj) {
         return wrapped.equals(obj);
@@ -92,7 +93,7 @@ public class UmameWrappedException extends BaseUmameRuntimeException {
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        return new UmameWrappedException(wrapped);
+        throw new CloneNotSupportedException();
     }
 
     /**

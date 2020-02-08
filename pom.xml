@@ -547,6 +547,7 @@
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <!--suppress MavenModelInspection -->
                         <artifactId>maven-jxr-plugin</artifactId>
                         <reportSets>
                             <reportSet>
@@ -572,14 +573,17 @@
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <!--suppress MavenModelInspection -->
                         <artifactId>maven-pmd-plugin</artifactId>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <!--suppress MavenModelInspection -->
                         <artifactId>maven-changelog-plugin</artifactId>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <!--suppress MavenModelInspection -->
                         <artifactId>maven-doap-plugin</artifactId>
                     </plugin>
                 </plugins>
