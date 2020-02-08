@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+  ~ Copyright (c) 2020 Kaiserpfalz EDV-Service, Roland T. Lichti
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.kaiserpfalzedv</groupId>
+    <groupId>de.kaiserpfalzedv.umame</groupId>
     <artifactId>umame</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -21,21 +38,36 @@
     </modules>
 
     <properties>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <java-module-name>de.kaiserpfalzedv.umame</java-module-name>
 
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
         <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
+        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
     </properties>
+
+    <scm>
+        <connection>scm:git:https://github.com/klenkes74/umame.git</connection>
+        <developerConnection>scm:git:ssh://github.com:klenkes74/umame.git</developerConnection>
+    </scm>
 
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/javax.ws.rs/javax.ws.rs-api -->
+            <dependency>
+                <groupId>javax.ws.rs</groupId>
+                <artifactId>javax.ws.rs-api</artifactId>
+                <version>2.1.1</version>
+            </dependency>
+
             <dependency>
                 <groupId>javax.annotation</groupId>
                 <artifactId>javax.annotation-api</artifactId>
@@ -57,13 +89,6 @@
                 <groupId>org.immutables</groupId>
                 <artifactId>encode</artifactId>
                 <version>2.8.2</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.jacoco</groupId>
-                <artifactId>org.jacoco.agent</artifactId>
-                <version>0.8.5</version>
-                <classifier>runtime</classifier>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
@@ -253,7 +278,23 @@
                             <manifest>
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             </manifest>
+                            <manifestEntries>
+                                <Automatic-Module-Name>${java-module-name}</Automatic-Module-Name>
+                            </manifestEntries>
                         </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>3.0.0-M4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
+                    <configuration>
+                        <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -262,20 +303,19 @@
                     <version>${jacoco-maven-plugin.version}</version>
                     <executions>
                         <execution>
-                            <id>jacoco-site</id>
-                            <phase>post-integration-test</phase>
+                            <id>default-prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>default-report</id>
                             <goals>
                                 <goal>report</goal>
                             </goals>
                         </execution>
                         <execution>
-                            <id>report</id>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>jacoco-check</id>
+                            <id>default-check</id>
                             <goals>
                                 <goal>check</goal>
                             </goals>
@@ -328,9 +368,58 @@
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>3.0.0</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jxr-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>3.13.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-changelog-plugin</artifactId>
+                    <version>2.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-doap-plugin</artifactId>
+                    <version>1.2</version>
+                    <configuration>
+                        <doapOptions>
+                            <!-- Default values -->
+                            <bugDatabase>${project.issueManagement.url}</bugDatabase>
+                            <category>library</category>
+                            <created>${project.inceptionYear}-01-01</created>
+                            <description>${project.description}</description>
+                            <downloadPage>\${project.distributionManagement.downloadUrl}</downloadPage>
+                            <homepage>${project.url}</homepage>
+                            <license>\$\{project.licenses[0].url}</license>
+                            <mailingList>${project.url}/mail-lists.html</mailingList>
+                            <name>${project.name}</name>
+                            <programmingLanguage>Java</programmingLanguage>
+                            <scmAnonymousConnection>${project.scm.connection}</scmAnonymousConnection>
+                            <scmDeveloperConnection>${project.scm.developerConnection}</scmDeveloperConnection>
+                            <shortdesc>${project.description}</shortdesc>
+                            <vendor>${project.organization.name}</vendor>
+                        </doapOptions>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+
 
     <profiles>
         <profile>
@@ -344,15 +433,6 @@
 
             <dependencies>
                 <dependency>
-                    <groupId>javax.annotation</groupId>
-                    <artifactId>javax.annotation-api</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>jakarta.enterprise</groupId>
-                    <artifactId>jakarta.enterprise.cdi-api</artifactId>
-                </dependency>
-
-                <dependency>
                     <groupId>org.immutables</groupId>
                     <artifactId>value</artifactId>
                     <scope>compile</scope>
@@ -362,12 +442,6 @@
                     <artifactId>encode</artifactId>
                 </dependency>
 
-
-                <dependency>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>org.jacoco.agent</artifactId>
-                    <classifier>runtime</classifier>
-                </dependency>
 
                 <dependency>
                     <groupId>org.junit.jupiter</groupId>
@@ -403,6 +477,7 @@
                 <dependency>
                     <groupId>ch.qos.logback</groupId>
                     <artifactId>logback-classic</artifactId>
+                    <scope>test</scope>
                 </dependency>
             </dependencies>
 
@@ -419,6 +494,9 @@
                         <artifactId>maven-jar-plugin</artifactId>
                     </plugin>
                     <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+                    <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
                     </plugin>
@@ -430,9 +508,82 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-project-info-reports-plugin</artifactId>
                     </plugin>
-
                 </plugins>
             </build>
+
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <reportSets>
+                            <reportSet><!-- by default, id = "default" -->
+                                <reports><!-- select non-aggregate reports -->
+                                    <report>javadoc</report>
+                                    <report>test-javadoc</report>
+                                </reports>
+                            </reportSet>
+                            <reportSet>
+                                <id>aggregate</id>
+                                <inherited>false</inherited>
+                                <reports>
+                                    <report>aggregate</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <reportSets>
+                            <reportSet>
+                                <id>aggregate</id>
+                                <inherited>false</inherited>
+                                <reports>
+                                    <report>aggregate</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jxr-plugin</artifactId>
+                        <reportSets>
+                            <reportSet>
+                                <id>aggregate</id>
+                                <inherited>false</inherited>
+                                <reports>
+                                    <report>aggregate</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <reportSets>
+                            <reportSet>
+                                <reports>
+                                    <!-- select non-aggregate reports -->
+                                    <report>report</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-pmd-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-changelog-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-doap-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </reporting>
         </profile>
     </profiles>
 </project>
