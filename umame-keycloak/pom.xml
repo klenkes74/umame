@@ -23,7 +23,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>de.kaiserpfalzedv.umame</groupId>
+        <groupId>de.kaiserpfalz-edv.umame</groupId>
         <artifactId>umame</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -32,4 +32,15 @@
     <artifactId>umame-keycloak</artifactId>
 
     <name>UMAME :: Keycloak Implementation</name>
+    <description>
+        The Keycloak implemntation of UMAME is the reference implementation.
+        Other implementations with other client implementations may follow.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.umame</groupId>
+            <artifactId>umame-keycloak</artifactId>
+        </dependency>
+    </dependencies>
 </project>
