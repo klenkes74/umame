@@ -1,6 +1,6 @@
 BASE_NAME=index
 
-PROJECT_DIR=$(CURDIR)/docs
+PROJECT_DIR=$(CURDIR)/src/docs
 OUTPUT_DIR=$(CURDIR)/target/docs
 SEQDIAG_GENERATOR=podman run -it -v $(PROJECT_DIR):/documents:Z -v $(OUTPUT_DIR):/output:Z -w /documents/ quay.io/jaeichle/asciidoctor-redhat-fonts seqdiag
 ASCIIDOCTOR_COMMAND=podman run -it -v $(PROJECT_DIR):/documents:Z -v $(OUTPUT_DIR):/output:Z -w /documents/ quay.io/jaeichle/asciidoctor-redhat-fonts asciidoctor
@@ -10,10 +10,9 @@ ASCIIDOCTOR_PARAMS=-r asciidoctor-diagram
 SPELL = hunspell
 SPELLOPTS = -d en_GB
 
+all: maven $(BASE_NAME).pdf $(BASE_NAME).html $(BASE_NAME).xml
 
 seqdiag: 01-uma-flow-access.seqdiag.png 01-uma-flow-access-with-token.seqdiag.png 01-uma-register-resource.seqdiag.png
-
-all: maven $(BASE_NAME).pdf $(BASE_NAME).html $(BASE_NAME).xml
 
 clean:
 	rm -rf $(OUTPUT_DIR)
@@ -24,7 +23,7 @@ prepare: clean
 	mkdir -p $(PROJECT_DIR)/generated
 	mkdir -p $(OUTPUT_DIR)/generated
 
-%.seqdiag.png:
+%.seqdiag.png: prepare
 	$(SEQDIAG_GENERATOR) $*.seqdiag -o generated/$*.seqdiag.png
 
 spell:

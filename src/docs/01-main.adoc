@@ -1,0 +1,43 @@
+== Overview and architecture
+
+=== Scope of UMAME
+
+UMAME tries to solve the problems for resource server(((Resource Server)))(((, Resource Server)))s.
+It is directed to JAX-RS resources that should be protected on resource level with user managed access.
+There will be support for (un)registering resources at the authorization server(((Authorization Server))) (((, Authorization Server))), but the management of the permissions ins out of scope.
+You will need some software to allow that management.
+The used reference implementation ((Keycloak))footnote:keycloak[https://www.keycloak.org[Keycloak] is an open source project
+mainly developed by https://www.redhat.com[Red Hat].
+Red Hat also offers a supported product Red Hat SSO based on Keycloak.
+For full disclosure: I work for Red Hat.]
+
+For UMAME, the client and resource server(((Resource Server)))(((Resource Server))) are one identity.
+The sequence diagrams separated between them to show the (((Requesting Resource)))UMA request resource flow in a more recognizable manner.
+
+=== Sequence flows of this software
+
+The following flows are implemented in the library.
+
+==== Requesting a resource (w/ token)
+
+.(((Requesting Resource, w/ token)))Requesting a resource w/ token.
+[#uma-flow-resource-with-token]
+image::generated/01-uma-flow-access-with-token.seqdiag.png[width="200%"]
+The flow is easy, as soon as the client owns a token to request access.
+The token is checked at the introspection endpoint of the authorization server(((Authorization Server)))(((Authorization Server))).
+
+==== Requesting a resource (w/o token)
+
+.(((, Requesting Resource, w/o token)))Requesting a resource w/o token.
+[#uma-flow-resource-without-token]
+image::generated/01-uma-flow-access.seqdiag.png[width="200%"]
+When no token is transmitted during the request, the flow is quite complicated to retrieve the token.
+As soon as the token is presented, the flow in <<Requesting a resource (w/ token)>> is taking over.
+
+==== Registering a resource (w/o authz code)
+
+.(((, Register Resource)))Registering a new resource w/o authz code.
+[#uma-flow-register-resource]
+image::generated/01-uma-register-resource.seqdiag.png[with="200%"]
+The resource needs to be registered at the authorization server(((Authorization Server))) (((, Authorization Server))) to be accessible.
+The permission management will be handled out-of-band from UMAMEs point of view.

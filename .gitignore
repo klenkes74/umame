@@ -1,4 +1,4 @@
 .idea/
-docs/generated/
+src/docs/generated/
 target/
 *.iml
