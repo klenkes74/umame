@@ -40,7 +40,7 @@
     <dependencies>
         <dependency>
             <groupId>de.kaiserpfalz-edv.umame</groupId>
-            <artifactId>umame-keycloak</artifactId>
+            <artifactId>umame-api</artifactId>
         </dependency>
     </dependencies>
 </project>
