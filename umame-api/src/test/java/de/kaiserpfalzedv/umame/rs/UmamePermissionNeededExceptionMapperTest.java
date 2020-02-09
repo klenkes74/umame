@@ -17,8 +17,6 @@
 
 package de.kaiserpfalzedv.umame.rs;
 
-import de.kaiserpfalzedv.umame.uma.AuthorizationServer;
-import de.kaiserpfalzedv.umame.uma.PermissionTicket;
 import de.kaiserpfalzedv.umame.uma.UmamePermissionNeededException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,9 +25,10 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.ws.rs.core.Response;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.UUID;
+
+import static de.kaiserpfalzedv.umame.rs.TestObjects.AS;
+import static de.kaiserpfalzedv.umame.rs.TestObjects.PRT;
+import static de.kaiserpfalzedv.umame.rs.TestObjects.TICKET_STRING;
 
 /**
  * @author rlichti
@@ -38,26 +37,6 @@ import java.util.UUID;
  */
 public class UmamePermissionNeededExceptionMapperTest {
     private static final Logger LOG = LoggerFactory.getLogger(UmamePermissionNeededExceptionMapperTest.class);
-
-    private static URI AS_URI;
-
-    static {
-        try {
-            AS_URI = new URI("https://sso.kaiserpfalz-edv.de/demo/.well_known/");
-        } catch (URISyntaxException e) {
-            // it's a valid URL!
-        }
-    }
-
-    private static final AuthorizationServer AS = AuthorizationServer.builder()
-            .realm("Kaiserpfalz EDV-Service")
-            .uri(AS_URI)
-            .build();
-
-    private static final String TICKET_STRING = UUID.randomUUID().toString();
-    private static final PermissionTicket PRT = PermissionTicket.builder()
-            .ticket(TICKET_STRING)
-            .build();
 
     private static final UmamePermissionNeededException EXCEPTION = new UmamePermissionNeededException(AS, PRT);
 

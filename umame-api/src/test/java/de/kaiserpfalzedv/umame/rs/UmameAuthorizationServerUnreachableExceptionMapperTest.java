@@ -17,7 +17,6 @@
 
 package de.kaiserpfalzedv.umame.rs;
 
-import de.kaiserpfalzedv.umame.uma.AuthorizationServer;
 import de.kaiserpfalzedv.umame.uma.UmameAuthorizationServerUnreachableException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,8 +26,6 @@ import org.slf4j.MDC;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * @author rlichti
@@ -38,22 +35,7 @@ import java.net.URISyntaxException;
 public class UmameAuthorizationServerUnreachableExceptionMapperTest {
     private static final Logger LOG = LoggerFactory.getLogger(UmameAuthorizationServerUnreachableExceptionMapperTest.class);
 
-    private static URI AS_URI;
-
-    static {
-        try {
-            AS_URI = new URI("https://sso.kaiserpfalz-edv.de/demo/.well_known/");
-        } catch (URISyntaxException e) {
-            // it's a valid URL!
-        }
-    }
-
-    private static final AuthorizationServer AS = AuthorizationServer.builder()
-            .realm("Kaiserpfalz EDV-Service")
-            .uri(AS_URI)
-            .build();
-
-    private static final UmameAuthorizationServerUnreachableException EXCEPTION = new UmameAuthorizationServerUnreachableException(AS);
+    private static final UmameAuthorizationServerUnreachableException EXCEPTION = new UmameAuthorizationServerUnreachableException(TestObjects.AS);
 
     private UmameAuthorizationServerUnreachableExceptionMapper service;
 
@@ -77,7 +59,7 @@ public class UmameAuthorizationServerUnreachableExceptionMapperTest {
     @Test
     public void shouldReturnTheStatusWhenExceptionIsTested() {
         assert EXCEPTION.getStatus() == Response.Status.FORBIDDEN;
-        assert EXCEPTION.getAS().equals(AS);
+        assert EXCEPTION.getAS().equals(TestObjects.AS);
     }
 
 
