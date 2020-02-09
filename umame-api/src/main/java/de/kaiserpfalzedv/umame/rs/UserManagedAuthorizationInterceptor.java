@@ -34,6 +34,15 @@ import javax.interceptor.InvocationContext;
 public class UserManagedAuthorizationInterceptor {
     private static final Logger LOG = LoggerFactory.getLogger(UserManagedAuthorizationInterceptor.class);
 
+    /**
+     * This method handles the UMA flow. If the result type of the intercepted method is Response, the needed HTTP
+     * responses are generated directly, otherwise matching exceptions are thrown which will be handled via the matching
+     * JAX-RS exception mappers.
+     *
+     * @param context the information about the called JAX-RS resource.
+     * @return The result of the intercepted method call.
+     * @throws Exception of the called method.
+     */
     @AroundInvoke
     public Object protect(InvocationContext context) throws Exception {
         return context.proceed();
