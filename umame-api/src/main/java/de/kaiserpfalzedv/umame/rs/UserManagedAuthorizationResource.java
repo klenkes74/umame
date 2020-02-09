@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.umame.rs;
 
 import javax.interceptor.InterceptorBinding;
-import java.lang.annotation.Inherited;
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -37,7 +37,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @version 1.0.0 2020-02-08
  * @since 1.0.0 2020-02-08
  */
-@Inherited
+@Documented
 @InterceptorBinding
 @Retention(RUNTIME)
 @Target({TYPE, METHOD})
