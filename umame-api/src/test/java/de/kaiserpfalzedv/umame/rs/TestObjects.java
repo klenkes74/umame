@@ -40,6 +40,16 @@ public class TestObjects {
         }
     }
 
+    public static URI REDIRECTION;
+
+    static {
+        try {
+            REDIRECTION = new URI("https://sso.kaiserpfalz-edv.de/redirected/");
+        } catch (URISyntaxException e) {
+            // it's a valid URL!
+        }
+    }
+
     public static final AuthorizationServer AS = AuthorizationServer.builder()
             .realm("Kaiserpfalz EDV-Service")
             .uri(AS_URI)
