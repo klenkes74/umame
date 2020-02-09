@@ -17,7 +17,6 @@
 
 package de.kaiserpfalzedv.umame.rs;
 
-import de.kaiserpfalzedv.umame.uma.UmameResourceOwnerInterventionNeededException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

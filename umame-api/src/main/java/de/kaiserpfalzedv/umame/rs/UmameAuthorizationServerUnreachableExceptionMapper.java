@@ -17,8 +17,6 @@
 
 package de.kaiserpfalzedv.umame.rs;
 
-import de.kaiserpfalzedv.umame.uma.UmameAuthorizationServerUnreachableException;
-
 import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

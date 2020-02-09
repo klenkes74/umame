@@ -15,53 +15,63 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.umame.uma;
+package de.kaiserpfalzedv.umame.rs;
 
 import de.kaiserpfalzedv.umame.BaseUmameRuntimeException;
+import de.kaiserpfalzedv.umame.uma.AuthorizationServer;
+import de.kaiserpfalzedv.umame.uma.PermissionTicket;
 
 import javax.ws.rs.core.Response;
-import java.net.URI;
+import java.util.Optional;
 
 /**
- * Redirects the requesting party to the claim endpoint of the authorization server.
- *
  * @author rlichti
  * @version 1.0.0 2020-02-08
  * @since 1.0.0 2020-02-08
  */
-public class UmameRedirectToClaimEndpointException extends BaseUmameRuntimeException {
+public class UmameResourceOwnerInterventionNeededException extends BaseUmameRuntimeException {
     private static final Response.Status STATUS = Response.Status.FORBIDDEN;
-
+    /**
+     * The permissin ticket returned by the Authorization Server for this
+     * resource.
+     */
     private AuthorizationServer as;
     private PermissionTicket prt;
-    private URI redirectionTarget;
+    private Long interval = null;
 
-    public UmameRedirectToClaimEndpointException(
+    public UmameResourceOwnerInterventionNeededException(
             final AuthorizationServer as,
-            final PermissionTicket prt,
-            final URI redirectionTarget
+            final PermissionTicket prt
     ) {
-        super("{\n  \"error\": \"need_info\",\n  \"ticket\": \"" + prt.getTicket() + "\",\n  \"redirect_user\": \""
-                      + redirectionTarget.toASCIIString() + "\"\n}");
+        super("{\n  \"error\":\"request_submitted\",\n  \"ticket\":\"" + prt.getTicket() + "\"\n}");
 
         this.as = as;
         this.prt = prt;
-        this.redirectionTarget = redirectionTarget;
+    }
+
+    public UmameResourceOwnerInterventionNeededException(
+            final AuthorizationServer as,
+            final PermissionTicket prt,
+            final Long interval
+    ) {
+        super("{\n  \"error\":\"request_submitted\",\n  \"ticket\":\"" + prt.getTicket() + "\",\n  \"interval\": " + interval + "\n}");
+
+        this.as = as;
+        this.prt = prt;
+        this.interval = interval;
     }
 
     public Response.Status getStatus() {
         return STATUS;
     }
 
-    public AuthorizationServer getAS() {
-        return as;
-    }
+    public AuthorizationServer getAS() { return as; }
 
     public PermissionTicket getPRT() {
         return prt;
     }
 
-    public URI getRedirectionTarget() {
-        return redirectionTarget;
+    public Optional<Long> getInterval() {
+        return Optional.ofNullable(interval);
     }
 }

@@ -15,35 +15,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.umame.uma;
+package de.kaiserpfalzedv.umame.rs;
 
 import de.kaiserpfalzedv.umame.BaseUmameRuntimeException;
+import de.kaiserpfalzedv.umame.uma.AuthorizationServer;
 
 import javax.ws.rs.core.Response;
 
 /**
- * This exception marks the need for a permission. The caller needs to request
- * the permission at the Authorization Server and return the token to access
- * the resource.
+ * If the resource server is unable to provide a permission ticket from the
+ * authorization server, then it includes a header of the following form in its
+ * response to the client: Warning: 199 - "UMA Authorization Server
+ * Unreachable".
  *
  * @author rlichti
  * @version 1.0.0 2020-02-08
  * @since 1.0.0 2020-02-08
  */
-public class UmamePermissionTicketNotFoundException extends BaseUmameRuntimeException {
-    private static final Response.Status STATUS = Response.Status.BAD_REQUEST;
-    /**
-     * The permissin ticket returned by the Authorization Server for this
-     * resource.
-     */
-    private AuthorizationServer as;
-    private PermissionTicket prt;
+public class UmameRequestDeniedException extends BaseUmameRuntimeException {
+    private static final Response.Status STATUS = Response.Status.FORBIDDEN;
 
-    public UmamePermissionTicketNotFoundException(final AuthorizationServer as, final PermissionTicket prt) {
-        super("{\"error\": \"invalid_grant\"}");
+    private AuthorizationServer as;
+
+    public UmameRequestDeniedException(AuthorizationServer as) {
+        super("{\n  \"error\": \"request_denied\"\n}");
 
         this.as = as;
-        this.prt = prt;
     }
 
     public Response.Status getStatus() {
@@ -51,8 +48,4 @@ public class UmamePermissionTicketNotFoundException extends BaseUmameRuntimeExce
     }
 
     public AuthorizationServer getAS() { return as; }
-
-    public PermissionTicket getPRT() {
-        return prt;
-    }
 }
